@@ -63,8 +63,12 @@
     <Compile Include="Interfaces\AudioPlayer\AudioItemStream.cs" />
     <Compile Include="Interfaces\AudioPlayer\AudioPlayerInterface.cs" />
     <Compile Include="Interfaces\AudioPlayer\AudioPlayerState.cs" />
+    <Compile Include="Interfaces\AudioPlayer\Directives\AudioPlayerResponseBuilderExtentions.cs" />
+    <Compile Include="Interfaces\AudioPlayer\Directives\SpeechletResponseBuilderExtentions.cs" />
+    <Compile Include="Interfaces\Dialog\Directives\SpeechletResponseBuilderExtentions.cs" />
     <Compile Include="Interfaces\Display\Directives\HintDirective.cs" />
     <Compile Include="Interfaces\Display\Directives\DisplayRenderTemplateDirective.cs" />
+    <Compile Include="Interfaces\Display\Directives\SpeechletResponseBuilderExtentions.cs" />
     <Compile Include="Interfaces\Display\DisplayInterface.cs" />
     <Compile Include="Interfaces\Display\DisplayImage.cs" />
     <Compile Include="Interfaces\Display\DisplayImageSource.cs" />
@@ -77,6 +81,7 @@
     <Compile Include="Interfaces\Dialog\Directives\DialogDirective.cs" />
     <Compile Include="Interfaces\Dialog\Directives\DialogConfirmSlotDirective.cs" />
     <Compile Include="Interfaces\Dialog\Directives\DialogElicitSlotDirective.cs" />
+    <Compile Include="Interfaces\VideoApp\Directives\SpeechletResponseBuilderExtentions.cs" />
     <Compile Include="Interfaces\VideoApp\Directives\VideoAppLaunchDirective.cs" />
     <Compile Include="Interfaces\VideoApp\VideoItem.cs" />
     <Compile Include="Interfaces\VideoApp\VideoItemMetadata.cs" />
@@ -91,6 +96,10 @@
     <Compile Include="Slu\Slot.cs" />
     <Compile Include="Speechlet\AudioPlayerDirective.cs" />
     <Compile Include="Speechlet\Cause.cs" />
+    <Compile Include="Speechlet\IAudioPlayerResponseBuilder.cs" />
+    <Compile Include="Speechlet\ISpeechletResponseBuilder.cs" />
+    <Compile Include="Speechlet\AudioPlayerResponseBuilder.cs" />
+    <Compile Include="Speechlet\SpeechletResponseBuilder.cs" />
     <Compile Include="Speechlet\SystemExceptionEncounteredRequest.cs" />
     <Compile Include="Speechlet\AudioPlayerPlaybackFailedRequest.cs" />
     <Compile Include="Speechlet\Error.cs" />
@@ -123,6 +132,7 @@
     <Compile Include="Speechlet\User.cs" />
     <Compile Include="UI\Image.cs" />
     <Compile Include="UI\AskForPermissionsConsentCard.cs" />
+    <Compile Include="UI\SpeechletResponseBuilderExtentions.cs" />
     <Compile Include="UI\StandardCard.cs" />
     <Compile Include="UI\SsmlOutputSpeech.cs" />
     <Compile Include="UI\Reprompt.cs" />
