@@ -5,10 +5,8 @@ using System.Collections.Generic;
 using NLog;
 using AlexaSkillsKit.Speechlet;
 using AlexaSkillsKit.Slu;
-using AlexaSkillsKit.UI;
 using AlexaSkillsKit.Interfaces.Display;
 using AlexaSkillsKit.Interfaces.VideoApp;
-using AlexaSkillsKit.Interfaces.Display.Directives;
 using AlexaSkillsKit.Interfaces.VideoApp.Directives;
 
 namespace Sample.Controllers
@@ -162,23 +160,11 @@ namespace Sample.Controllers
          * @return SpeechletResponse spoken and visual response for the given input
          */
         private SpeechletResponse BuildSpeechletResponse(string title, string output, bool shouldEndSession) {
-            // Create the Simple card content.
-            SimpleCard card = new SimpleCard();
-            card.Title = String.Format("SessionSpeechlet - {0}", title);
-            card.Subtitle = String.Format("SessionSpeechlet - Sub Title");
-            card.Content = String.Format("SessionSpeechlet - {0}", output);
-
-            // Create the plain text output.
-            PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-            speech.Text = output;
-
             /* Create a directive for Echo Show (example)
              * This can be separeted so it can be easier to create
              * a Show Directive where you can only need to write 
              * the important information
              */
-            IList<Directive> listDirectiveTest = new List<Directive>();
-            DisplayRenderTemplateDirective directiveTest = new DisplayRenderTemplateDirective();
             DisplayTemplate templateTest = new DisplayTemplate();
             DisplayImage backgroundTest = new DisplayImage();
             DisplayImage imageTest = new DisplayImage();
@@ -226,17 +212,16 @@ namespace Sample.Controllers
             templateTest.Token = "";
             templateTest.TextContent = textContentTest;
 
-            directiveTest.Template = templateTest;
-            listDirectiveTest.Add(directiveTest);
-
             // Create the speechlet response.
-            SpeechletResponse response = new SpeechletResponse();
-            response.ShouldEndSession = shouldEndSession;
-            response.OutputSpeech = speech;
-            response.Card = card;
-            response.Directives = listDirectiveTest;
+            var builder = new SpeechletResponseBuilder()
+                .Say(output)
+                .WithSimpleCard($"SessionSpeechlet - {title}", $"SessionSpeechlet - {output}")
+                .WithDisplayRenderTemplateDirective(templateTest);
+            if (!shouldEndSession) {
+                builder.KeepSession();
+            }
 
-            return response;
+            return new SpeechletResponse();
         }
 
 
