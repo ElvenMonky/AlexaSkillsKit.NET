@@ -35,8 +35,9 @@ namespace AlexaSkillsKit.Speechlet
                 validationResult = validationResult | SpeechletRequestValidationResult.NoSignatureHeader;
             }
 
-            var alexaBytes = AsyncHelpers.RunSync<byte[]>(() => httpRequest.Content.ReadAsByteArrayAsync());
-            Debug.WriteLine(httpRequest.ToLogString());
+            var alexaBytes = AsyncHelpers.RunSync(() => httpRequest.Content.ReadAsByteArrayAsync());
+            var alexaContent = Encoding.UTF8.GetString(alexaBytes);
+            Debug.WriteLine(alexaContent);
 
             // attempt to verify signature only if we were able to locate certificate and signature headers
             if (validationResult == SpeechletRequestValidationResult.OK) {
@@ -47,7 +48,6 @@ namespace AlexaSkillsKit.Speechlet
 
             SpeechletRequestEnvelope alexaRequest = null;
             try {
-                var alexaContent = UTF8Encoding.UTF8.GetString(alexaBytes);
                 alexaRequest = SpeechletRequestEnvelope.FromJson(alexaContent);
             }
             catch (Exception ex)
@@ -69,6 +69,7 @@ namespace AlexaSkillsKit.Speechlet
             }
 
             string alexaResponse = DoProcessRequest(alexaRequest);
+            Debug.WriteLine(alexaResponse);
 
             HttpResponseMessage httpResponse;
             if (alexaResponse == null) {
@@ -77,7 +78,6 @@ namespace AlexaSkillsKit.Speechlet
             else {
                 httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
                 httpResponse.Content = new StringContent(alexaResponse, Encoding.UTF8, "application/json");
-                Debug.WriteLine(httpResponse.ToLogString());
             }
 
             return httpResponse;

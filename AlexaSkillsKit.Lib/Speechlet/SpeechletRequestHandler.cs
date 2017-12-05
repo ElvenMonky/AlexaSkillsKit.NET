@@ -13,8 +13,44 @@ using AlexaSkillsKit.Authentication;
 
 namespace AlexaSkillsKit.Speechlet
 {
-    public abstract class SpeechletAsync : ISpeechletAsync
+    public class SpeechletRequestHandler
     {
+        private readonly ISpeechlet speechlet;
+        private readonly ISpeechletAsync speechletAsync;
+
+        public SpeechletRequestHandler(ISpeechlet speechlet) {
+            this.speechlet = speechlet;
+        }
+
+        public SpeechletRequestHandler(ISpeechletAsync speechletAsync) {
+            this.speechletAsync = speechletAsync;
+        }
+
+        public HttpResponseMessage GetResponse(HttpRequestMessage httpRequest) {
+            return AsyncHelpers.RunSync(() => GetResponseAsync(httpRequest));
+        }
+
+        /// <summary>
+        /// Processes Alexa request but does NOT validate request signature 
+        /// </summary>
+        /// <param name="requestContent"></param>
+        /// <returns></returns>
+        public string ProcessRequest(string requestContent) {
+            var requestEnvelope = SpeechletRequestEnvelope.FromJson(requestContent);
+            return AsyncHelpers.RunSync(() => DoProcessRequestAsync(requestEnvelope));
+        }
+
+
+        /// <summary>
+        /// Processes Alexa request but does NOT validate request signature
+        /// </summary>
+        /// <param name="requestJson"></param>
+        /// <returns></returns>
+        public string ProcessRequest(JObject requestJson) {
+            var requestEnvelope = SpeechletRequestEnvelope.FromJson(requestJson);
+            return AsyncHelpers.RunSync(() => DoProcessRequestAsync(requestEnvelope));
+        }
+
         /// <summary>
         /// Processes Alexa request AND validates request signature
         /// </summary>
@@ -77,8 +113,9 @@ namespace AlexaSkillsKit.Speechlet
                 httpResponse = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
             else {
-                httpResponse = new HttpResponseMessage(HttpStatusCode.OK);
-                httpResponse.Content = new StringContent(alexaResponse, Encoding.UTF8, "application/json");
+                httpResponse = new HttpResponseMessage(HttpStatusCode.OK) {
+                    Content = new StringContent(alexaResponse, Encoding.UTF8, "application/json")
+                };
             }
 
             return httpResponse;
@@ -192,25 +229,61 @@ namespace AlexaSkillsKit.Speechlet
             }
         }
 
+        private async Task<AudioPlayerResponse> OnAudioPlayerAsync(AudioPlayerRequest audioRequest, Context context) {
+            return speechlet != null ?
+                speechlet.OnAudioPlayer(audioRequest, context)
+                :
+                await speechletAsync.OnAudioPlayerAsync(audioRequest, context);
+        }
 
-        /// <summary>
-        /// Opportunity to set policy for handling requests with invalid signatures and/or timestamps
-        /// </summary>
-        /// <returns>true if request processing should continue, otherwise false</returns>
-        public virtual Task<bool> OnRequestValidationAsync(
-            SpeechletRequestValidationResult result, DateTime referenceTimeUtc, SpeechletRequestEnvelope requestEnvelope) {
-            
-            return Task.FromResult(result == SpeechletRequestValidationResult.OK);
+        private async Task<AudioPlayerResponse> OnPlaybackControllerAsync(PlaybackControllerRequest playbackRequest, Context context) {
+            return speechlet is ISpeechlet ?
+                (speechlet as ISpeechlet).OnPlaybackController(playbackRequest, context)
+                :
+                await (speechlet as ISpeechletAsync).OnPlaybackControllerAsync(playbackRequest, context);
+        }
+
+        private async Task OnSystemExceptionEncounteredAsync(SystemExceptionEncounteredRequest systemRequest, Context context) {
+            if (speechlet is ISpeechlet)
+                (speechlet as ISpeechlet).OnSystemExceptionEncountered(systemRequest, context);
+            else
+                await (speechlet as ISpeechletAsync).OnSystemExceptionEncounteredAsync(systemRequest, context);
+        }
+
+        private async Task<SpeechletResponse> OnIntentAsync(IntentRequest intentRequest, Session session, Context context) {
+            return speechlet is ISpeechlet ?
+                (speechlet as ISpeechlet).OnIntent(intentRequest, session, context)
+                :
+                await (speechlet as ISpeechletAsync).OnIntentAsync(intentRequest, session, context);
+        }
+
+        private async Task<SpeechletResponse> OnLaunchAsync(LaunchRequest launchRequest, Session session) {
+            return speechlet is ISpeechlet ?
+                (speechlet as ISpeechlet).OnLaunch(launchRequest, session)
+                :
+                await (speechlet as ISpeechletAsync).OnLaunchAsync(launchRequest, session);
         }
 
 
-        public abstract Task<AudioPlayerResponse> OnAudioPlayerAsync(AudioPlayerRequest audioRequest, Context context);
-        public abstract Task<AudioPlayerResponse> OnPlaybackControllerAsync(PlaybackControllerRequest playbackRequest, Context context);
-        public abstract Task OnSystemExceptionEncounteredAsync(SystemExceptionEncounteredRequest systemRequest, Context context);
+        private async Task OnSessionEndedAsync(SessionEndedRequest sessionEndedRequest, Session session) {
+            if (speechlet is ISpeechlet)
+                (speechlet as ISpeechlet).OnSessionEnded(sessionEndedRequest, session);
+            else
+                await (speechlet as ISpeechletAsync).OnSessionEndedAsync(sessionEndedRequest, session);
+        }
 
-        public abstract Task<SpeechletResponse> OnIntentAsync(IntentRequest intentRequest, Session session, Context context);
-        public abstract Task<SpeechletResponse> OnLaunchAsync(LaunchRequest launchRequest, Session session);
-        public abstract Task OnSessionEndedAsync(SessionEndedRequest sessionEndedRequest, Session session);
-        public abstract Task OnSessionStartedAsync(SessionStartedRequest sessionStartedRequest, Session session);
+        private async Task OnSessionStartedAsync(SessionStartedRequest sessionStartedRequest, Session session) {
+            if (speechlet is ISpeechlet)
+                (speechlet as ISpeechlet).OnSessionStarted(sessionStartedRequest, session);
+            else
+                await (speechlet as ISpeechletAsync).OnSessionStartedAsync(sessionStartedRequest, session);
+        }
+
+        private async Task<bool> OnRequestValidationAsync(SpeechletRequestValidationResult result, DateTime referenceTimeUtc, SpeechletRequestEnvelope requestEnvelope) {
+            return speechlet is ISpeechlet ?
+                (speechlet as ISpeechlet).OnRequestValidation(result, referenceTimeUtc, requestEnvelope)
+                :
+                await (speechlet as ISpeechletAsync).OnRequestValidationAsync(result, referenceTimeUtc, requestEnvelope);
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace AlexaSkillsKit.Speechlet
 {
     public interface ISpeechletAsync
     {
-        bool OnRequestValidation(
+        Task<bool> OnRequestValidationAsync(
             SpeechletRequestValidationResult result, DateTime referenceTimeUtc, SpeechletRequestEnvelope requestEnvelope);
 
         Task<AudioPlayerResponse> OnAudioPlayerAsync(AudioPlayerRequest audioRequest, Context context);
