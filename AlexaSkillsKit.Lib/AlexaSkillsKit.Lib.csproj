@@ -90,6 +90,8 @@
     <Compile Include="Slu\Slot.cs" />
     <Compile Include="Speechlet\AudioPlayerDirective.cs" />
     <Compile Include="Speechlet\Cause.cs" />
+    <Compile Include="Speechlet\SpeechletAsyncWrapper.cs" />
+    <Compile Include="Speechlet\SpeechletExtensions.cs" />
     <Compile Include="Speechlet\SpeechletRequestHandler.cs" />
     <Compile Include="Speechlet\SystemExceptionEncounteredRequest.cs" />
     <Compile Include="Speechlet\AudioPlayerPlaybackFailedRequest.cs" />

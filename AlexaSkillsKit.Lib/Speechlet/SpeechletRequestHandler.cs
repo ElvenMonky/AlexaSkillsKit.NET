@@ -7,49 +7,24 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using AlexaSkillsKit.Json;
 using AlexaSkillsKit.Authentication;
+using Newtonsoft.Json;
 
 namespace AlexaSkillsKit.Speechlet
 {
     public class SpeechletRequestHandler
     {
-        private readonly ISpeechlet speechlet;
         private readonly ISpeechletAsync speechletAsync;
 
         public SpeechletRequestHandler(ISpeechlet speechlet) {
-            this.speechlet = speechlet;
+            speechletAsync = new SpeechletAsyncWrapper(speechlet);
         }
 
         public SpeechletRequestHandler(ISpeechletAsync speechletAsync) {
             this.speechletAsync = speechletAsync;
         }
 
-        public HttpResponseMessage GetResponse(HttpRequestMessage httpRequest) {
-            return AsyncHelpers.RunSync(() => GetResponseAsync(httpRequest));
-        }
-
-        /// <summary>
-        /// Processes Alexa request but does NOT validate request signature 
-        /// </summary>
-        /// <param name="requestContent"></param>
-        /// <returns></returns>
-        public string ProcessRequest(string requestContent) {
-            var requestEnvelope = SpeechletRequestEnvelope.FromJson(requestContent);
-            return AsyncHelpers.RunSync(() => DoProcessRequestAsync(requestEnvelope));
-        }
-
-
-        /// <summary>
-        /// Processes Alexa request but does NOT validate request signature
-        /// </summary>
-        /// <param name="requestJson"></param>
-        /// <returns></returns>
-        public string ProcessRequest(JObject requestJson) {
-            var requestEnvelope = SpeechletRequestEnvelope.FromJson(requestJson);
-            return AsyncHelpers.RunSync(() => DoProcessRequestAsync(requestEnvelope));
-        }
 
         /// <summary>
         /// Processes Alexa request AND validates request signature
@@ -58,7 +33,6 @@ namespace AlexaSkillsKit.Speechlet
         /// <returns></returns>
         public async virtual Task<HttpResponseMessage> GetResponseAsync(HttpRequestMessage httpRequest) {
             SpeechletRequestValidationResult validationResult = SpeechletRequestValidationResult.OK;
-            DateTime now = DateTime.UtcNow; // reference time for this request
 
             string chainUrl = null;
             if (!httpRequest.Headers.Contains(Sdk.SIGNATURE_CERT_URL_REQUEST_HEADER) ||
@@ -88,9 +62,11 @@ namespace AlexaSkillsKit.Speechlet
                 alexaRequest = SpeechletRequestEnvelope.FromJson(alexaContent);
             }
             catch (Exception ex)
-            when (ex is Newtonsoft.Json.JsonReaderException || ex is InvalidCastException || ex is FormatException) {
+            when (ex is JsonReaderException || ex is InvalidCastException || ex is FormatException) {
                 validationResult = validationResult | SpeechletRequestValidationResult.InvalidJson;
             }
+
+            DateTime now = DateTime.UtcNow; // reference time for this request
 
             // attempt to verify timestamp only if we were able to parse request body
             if (alexaRequest != null) {
@@ -99,48 +75,21 @@ namespace AlexaSkillsKit.Speechlet
                 }
             }
 
-            if (alexaRequest == null || !await OnRequestValidationAsync(validationResult, now, alexaRequest)) {
+            if (alexaRequest == null || !await speechletAsync.OnRequestValidationAsync(validationResult, now, alexaRequest)) {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest) {
                     ReasonPhrase = validationResult.ToString()
                 };
             }
 
-            string alexaResponse = await DoProcessRequestAsync(alexaRequest);
-            Debug.WriteLine(alexaResponse);
+            var alexaResponse = await DoProcessRequestAsync(alexaRequest);
+            var json = alexaResponse?.ToJson();
+            Debug.WriteLine(json);
 
-            HttpResponseMessage httpResponse;
-            if (alexaResponse == null) {
-                httpResponse = new HttpResponseMessage(HttpStatusCode.InternalServerError);
-            }
-            else {
-                httpResponse = new HttpResponseMessage(HttpStatusCode.OK) {
-                    Content = new StringContent(alexaResponse, Encoding.UTF8, "application/json")
+            return (alexaResponse == null) ?
+                new HttpResponseMessage(HttpStatusCode.InternalServerError) :
+                new HttpResponseMessage(HttpStatusCode.OK) {
+                    Content = new StringContent(json, Encoding.UTF8, "application/json")
                 };
-            }
-
-            return httpResponse;
-        }
-
-
-        /// <summary>
-        /// Processes Alexa request but does NOT validate request signature 
-        /// </summary>
-        /// <param name="requestContent"></param>
-        /// <returns></returns>
-        public async virtual Task<string> ProcessRequestAsync(string requestContent) {
-            var requestEnvelope = SpeechletRequestEnvelope.FromJson(requestContent);
-            return await DoProcessRequestAsync(requestEnvelope);
-        }
-
-
-        /// <summary>
-        /// Processes Alexa request but does NOT validate request signature
-        /// </summary>
-        /// <param name="requestJson"></param>
-        /// <returns></returns>
-        public async virtual Task<string> ProcessRequestAsync(JObject requestJson) {
-            var requestEnvelope = SpeechletRequestEnvelope.FromJson(requestJson);
-            return await DoProcessRequestAsync(requestEnvelope);
         }
 
 
@@ -149,7 +98,7 @@ namespace AlexaSkillsKit.Speechlet
         /// </summary>
         /// <param name="requestEnvelope"></param>
         /// <returns></returns>
-        private async Task<string> DoProcessRequestAsync(SpeechletRequestEnvelope requestEnvelope) {
+        public async Task<SpeechletResponseEnvelope> DoProcessRequestAsync(SpeechletRequestEnvelope requestEnvelope) {
             Session session = requestEnvelope.Session;
             var context = requestEnvelope.Context;
             var request = requestEnvelope.Request;
@@ -160,38 +109,38 @@ namespace AlexaSkillsKit.Speechlet
             DoSessionManagement(request as IntentRequest, session);
 
             if (requestEnvelope.Session.IsNew) {
-                await OnSessionStartedAsync(
+                await speechletAsync.OnSessionStartedAsync(
                     new SessionStartedRequest(request.RequestId, request.Timestamp, request.Locale), session);
             }
 
             // process launch request
             if (requestEnvelope.Request is LaunchRequest) {
-                response = await OnLaunchAsync(request as LaunchRequest, session);
+                response = await speechletAsync.OnLaunchAsync(request as LaunchRequest, session);
             }
 
             // process audio player request
             else if (requestEnvelope.Request is AudioPlayerRequest) {
-                response = await OnAudioPlayerAsync(request as AudioPlayerRequest, context);
+                response = await speechletAsync.OnAudioPlayerAsync(request as AudioPlayerRequest, context);
             }
 
             // process playback controller request
             else if (requestEnvelope.Request is PlaybackControllerRequest) {
-                response = await OnPlaybackControllerAsync(request as PlaybackControllerRequest, context);
+                response = await speechletAsync.OnPlaybackControllerAsync(request as PlaybackControllerRequest, context);
             }
 
             // process system request
             else if (requestEnvelope.Request is SystemExceptionEncounteredRequest) {
-                await OnSystemExceptionEncounteredAsync(request as SystemExceptionEncounteredRequest, context);
+                await speechletAsync.OnSystemExceptionEncounteredAsync(request as SystemExceptionEncounteredRequest, context);
             }
 
             // process intent request
             else if (requestEnvelope.Request is IntentRequest) {
-                response = await OnIntentAsync(request as IntentRequest, session, context);
+                response = await speechletAsync.OnIntentAsync(request as IntentRequest, session, context);
             }
 
             // process session ended request
             else if (requestEnvelope.Request is SessionEndedRequest) {
-                await OnSessionEndedAsync(request as SessionEndedRequest, session);
+                await speechletAsync.OnSessionEndedAsync(request as SessionEndedRequest, session);
             }
 
             var responseEnvelope = new SpeechletResponseEnvelope {
@@ -199,7 +148,8 @@ namespace AlexaSkillsKit.Speechlet
                 Response = response,
                 SessionAttributes = session.Attributes
             };
-            return responseEnvelope.ToJson();
+
+            return responseEnvelope;
         }
 
 
@@ -227,63 +177,6 @@ namespace AlexaSkillsKit.Speechlet
             foreach (var slot in request.Intent.Slots.Values) {
                 if (!String.IsNullOrEmpty(slot.Value)) session.Attributes[slot.Name] = slot.Value;
             }
-        }
-
-        private async Task<AudioPlayerResponse> OnAudioPlayerAsync(AudioPlayerRequest audioRequest, Context context) {
-            return speechlet != null ?
-                speechlet.OnAudioPlayer(audioRequest, context)
-                :
-                await speechletAsync.OnAudioPlayerAsync(audioRequest, context);
-        }
-
-        private async Task<AudioPlayerResponse> OnPlaybackControllerAsync(PlaybackControllerRequest playbackRequest, Context context) {
-            return speechlet is ISpeechlet ?
-                (speechlet as ISpeechlet).OnPlaybackController(playbackRequest, context)
-                :
-                await (speechlet as ISpeechletAsync).OnPlaybackControllerAsync(playbackRequest, context);
-        }
-
-        private async Task OnSystemExceptionEncounteredAsync(SystemExceptionEncounteredRequest systemRequest, Context context) {
-            if (speechlet is ISpeechlet)
-                (speechlet as ISpeechlet).OnSystemExceptionEncountered(systemRequest, context);
-            else
-                await (speechlet as ISpeechletAsync).OnSystemExceptionEncounteredAsync(systemRequest, context);
-        }
-
-        private async Task<SpeechletResponse> OnIntentAsync(IntentRequest intentRequest, Session session, Context context) {
-            return speechlet is ISpeechlet ?
-                (speechlet as ISpeechlet).OnIntent(intentRequest, session, context)
-                :
-                await (speechlet as ISpeechletAsync).OnIntentAsync(intentRequest, session, context);
-        }
-
-        private async Task<SpeechletResponse> OnLaunchAsync(LaunchRequest launchRequest, Session session) {
-            return speechlet is ISpeechlet ?
-                (speechlet as ISpeechlet).OnLaunch(launchRequest, session)
-                :
-                await (speechlet as ISpeechletAsync).OnLaunchAsync(launchRequest, session);
-        }
-
-
-        private async Task OnSessionEndedAsync(SessionEndedRequest sessionEndedRequest, Session session) {
-            if (speechlet is ISpeechlet)
-                (speechlet as ISpeechlet).OnSessionEnded(sessionEndedRequest, session);
-            else
-                await (speechlet as ISpeechletAsync).OnSessionEndedAsync(sessionEndedRequest, session);
-        }
-
-        private async Task OnSessionStartedAsync(SessionStartedRequest sessionStartedRequest, Session session) {
-            if (speechlet is ISpeechlet)
-                (speechlet as ISpeechlet).OnSessionStarted(sessionStartedRequest, session);
-            else
-                await (speechlet as ISpeechletAsync).OnSessionStartedAsync(sessionStartedRequest, session);
-        }
-
-        private async Task<bool> OnRequestValidationAsync(SpeechletRequestValidationResult result, DateTime referenceTimeUtc, SpeechletRequestEnvelope requestEnvelope) {
-            return speechlet is ISpeechlet ?
-                (speechlet as ISpeechlet).OnRequestValidation(result, referenceTimeUtc, requestEnvelope)
-                :
-                await (speechlet as ISpeechletAsync).OnRequestValidationAsync(result, referenceTimeUtc, requestEnvelope);
         }
     }
 }
