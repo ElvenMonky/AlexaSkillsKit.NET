@@ -128,6 +128,11 @@ namespace AlexaSkillsKit.Speechlet
                 response = await speechletAsync.OnPlaybackControllerAsync(request as PlaybackControllerRequest, context);
             }
 
+            // process display request
+            else if (requestEnvelope.Request is DisplayRequest) {
+                response = await speechletAsync.OnDisplayAsync(request as DisplayRequest, context);
+            }
+
             // process system request
             else if (requestEnvelope.Request is SystemExceptionEncounteredRequest) {
                 await speechletAsync.OnSystemExceptionEncounteredAsync(request as SystemExceptionEncounteredRequest, context);

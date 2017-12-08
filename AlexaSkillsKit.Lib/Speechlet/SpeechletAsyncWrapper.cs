@@ -23,6 +23,10 @@ namespace AlexaSkillsKit.Speechlet
             return speechlet.OnPlaybackController(playbackRequest, context);
         }
 
+        public async Task<SpeechletResponse> OnDisplayAsync(DisplayRequest displayRequest, Context context) {
+            return speechlet.OnDisplay(displayRequest, context);
+        }
+
         public async Task OnSystemExceptionEncounteredAsync(SystemExceptionEncounteredRequest systemRequest, Context context) {
             speechlet.OnSystemExceptionEncountered(systemRequest, context);
         }

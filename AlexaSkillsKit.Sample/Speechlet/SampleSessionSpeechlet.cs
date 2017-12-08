@@ -34,6 +34,10 @@ namespace Sample.Controllers
             throw new NotImplementedException();
         }
 
+        public override SpeechletResponse OnDisplay(DisplayRequest displayRequest, Context context) {
+            throw new NotImplementedException();
+        }
+
         public override void OnSessionStarted(SessionStartedRequest request, Session session) {            
             Log.Info("OnSessionStarted requestId={0}, sessionId={1}", request.RequestId, session.SessionId);
         }
@@ -97,7 +101,7 @@ namespace Sample.Controllers
          */
         private SpeechletResponse SetNameInSessionAndSayHello(Intent intent, Session session) {
             // Get the slots from the intent.
-            Dictionary<string, Slot> slots = intent.Slots;
+            IDictionary<string, Slot> slots = intent.Slots;
 
             // Get the name slot from the list slots.
             Slot nameSlot = slots[NAME_SLOT];
