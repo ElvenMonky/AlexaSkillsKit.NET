@@ -17,5 +17,11 @@ namespace AlexaSkillsKit.Speechlet
 
             return deserializers[json.Name](json.Value as JObject);
         }
+
+        public static T FromJson(string name, JObject json) {
+            if (json == null || !deserializers.ContainsKey(name)) return default(T);
+
+            return deserializers[name](json);
+        }
     }
 }

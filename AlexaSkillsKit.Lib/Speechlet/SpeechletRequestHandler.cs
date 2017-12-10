@@ -1,6 +1,4 @@
-﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
-
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -10,11 +8,32 @@ using System.Threading.Tasks;
 using AlexaSkillsKit.Json;
 using AlexaSkillsKit.Authentication;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace AlexaSkillsKit.Speechlet
 {
     public class SpeechletRequestHandler
     {
+        private static IDictionary<Type, Func<SpeechletRequest, Session, Context, Task<ISpeechletResponse>>> handlers
+            = new Dictionary<Type, Func<SpeechletRequest, Session, Context, Task<ISpeechletResponse>>>();
+
+        public static void UseInterface<T>(Func<T, Context, Task<ISpeechletResponse>> handler) where T: SpeechletRequest {
+            handlers[typeof(T)] = async (request, session, context) => await handler(request as T, context);
+        }
+
+        public static void UseStandard(ISpeechletAsync speechletAsync) {
+            handlers[typeof(LaunchRequest)] = async (request, session, context) => await speechletAsync.OnLaunchAsync(request as LaunchRequest, session);
+            handlers[typeof(IntentRequest)] = async (request, session, context) => await speechletAsync.OnIntentAsync(request as IntentRequest, session, context);
+            handlers[typeof(SessionEndedRequest)] = async (request, session, context) => {
+                await speechletAsync.OnSessionEndedAsync(request as SessionEndedRequest, session);
+                return null;
+            };
+            handlers[typeof(SystemExceptionEncounteredRequest)] = async (request, session, context) => {
+                await speechletAsync.OnSystemExceptionEncounteredAsync(request as SystemExceptionEncounteredRequest, context);
+                return null;
+            };
+        }
+
         private readonly ISpeechletAsync speechletAsync;
 
         public SpeechletRequestHandler(ISpeechlet speechlet) {
@@ -24,7 +43,6 @@ namespace AlexaSkillsKit.Speechlet
         public SpeechletRequestHandler(ISpeechletAsync speechletAsync) {
             this.speechletAsync = speechletAsync;
         }
-
 
         /// <summary>
         /// Processes Alexa request AND validates request signature
@@ -109,38 +127,14 @@ namespace AlexaSkillsKit.Speechlet
             DoSessionManagement(request as IntentRequest, session);
 
             if (requestEnvelope.Session.IsNew) {
-                await speechletAsync.OnSessionStartedAsync(
-                    new SessionStartedRequest(request.RequestId, request.Timestamp, request.Locale), session);
+                await speechletAsync.OnSessionStartedAsync(new SessionStartedRequest(request), session);
             }
 
-            // process launch request
-            if (requestEnvelope.Request is LaunchRequest) {
-                response = await speechletAsync.OnLaunchAsync(request as LaunchRequest, session);
-            }
-
-            // process audio player request
-            else if (requestEnvelope.Request is AudioPlayerRequest) {
-                response = await speechletAsync.OnAudioPlayerAsync(request as AudioPlayerRequest, context);
-            }
-
-            // process playback controller request
-            else if (requestEnvelope.Request is PlaybackControllerRequest) {
-                response = await speechletAsync.OnPlaybackControllerAsync(request as PlaybackControllerRequest, context);
-            }
-
-            // process system request
-            else if (requestEnvelope.Request is SystemExceptionEncounteredRequest) {
-                await speechletAsync.OnSystemExceptionEncounteredAsync(request as SystemExceptionEncounteredRequest, context);
-            }
-
-            // process intent request
-            else if (requestEnvelope.Request is IntentRequest) {
-                response = await speechletAsync.OnIntentAsync(request as IntentRequest, session, context);
-            }
-
-            // process session ended request
-            else if (requestEnvelope.Request is SessionEndedRequest) {
-                await speechletAsync.OnSessionEndedAsync(request as SessionEndedRequest, session);
+            foreach (var pair in handlers) {
+                if (pair.Key.IsAssignableFrom(request.GetType())) {
+                    response = await pair.Value(request, session, context);
+                    break;
+                }
             }
 
             var responseEnvelope = new SpeechletResponseEnvelope {

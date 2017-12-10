@@ -1,6 +1,4 @@
-﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using AlexaSkillsKit.Json;
 using AlexaSkillsKit.Authentication;
@@ -13,14 +11,6 @@ namespace AlexaSkillsKit.Speechlet
 
         public SpeechletAsyncWrapper(ISpeechlet speechlet) {
             this.speechlet = speechlet;
-        }
-
-        public async Task<AudioPlayerResponse> OnAudioPlayerAsync(AudioPlayerRequest audioRequest, Context context) {
-            return speechlet.OnAudioPlayer(audioRequest, context);
-        }
-
-        public async Task<AudioPlayerResponse> OnPlaybackControllerAsync(PlaybackControllerRequest playbackRequest, Context context) {
-            return speechlet.OnPlaybackController(playbackRequest, context);
         }
 
         public async Task OnSystemExceptionEncounteredAsync(SystemExceptionEncounteredRequest systemRequest, Context context) {

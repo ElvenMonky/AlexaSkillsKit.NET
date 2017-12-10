@@ -11,8 +11,6 @@ namespace AlexaSkillsKit.Speechlet
         bool OnRequestValidation(
             SpeechletRequestValidationResult result, DateTime referenceTimeUtc, SpeechletRequestEnvelope requestEnvelope);
 
-        AudioPlayerResponse OnAudioPlayer(AudioPlayerRequest audioRequest, Context context);
-        AudioPlayerResponse OnPlaybackController(PlaybackControllerRequest playbackRequest, Context context);
         void OnSystemExceptionEncountered(SystemExceptionEncounteredRequest systemRequest, Context context);
 
         SpeechletResponse OnIntent(IntentRequest intentRequest, Session session, Context context);

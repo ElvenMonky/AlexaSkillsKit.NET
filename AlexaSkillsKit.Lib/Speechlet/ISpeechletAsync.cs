@@ -12,8 +12,6 @@ namespace AlexaSkillsKit.Speechlet
         Task<bool> OnRequestValidationAsync(
             SpeechletRequestValidationResult result, DateTime referenceTimeUtc, SpeechletRequestEnvelope requestEnvelope);
 
-        Task<AudioPlayerResponse> OnAudioPlayerAsync(AudioPlayerRequest audioRequest, Context context);
-        Task<AudioPlayerResponse> OnPlaybackControllerAsync(PlaybackControllerRequest playbackRequest, Context context);
         Task OnSystemExceptionEncounteredAsync(SystemExceptionEncounteredRequest systemRequest, Context context);
 
         Task<SpeechletResponse> OnIntentAsync(IntentRequest intentRequest, Session session, Context context);

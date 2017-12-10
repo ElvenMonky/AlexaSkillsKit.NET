@@ -3,9 +3,7 @@
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using AlexaSkillsKit.Helpers;
 using AlexaSkillsKit.Speechlet;
-using AlexaSkillsKit.Slu;
 
 namespace AlexaSkillsKit.Json
 {
@@ -25,84 +23,16 @@ namespace AlexaSkillsKit.Json
             return FromJson(json);
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="json"></param>
-        /// <returns></returns>
         public static SpeechletRequestEnvelope FromJson(JObject json) {
-            if (json["version"] != null && json["version"].Value<string>() != Sdk.VERSION) {
+            var version = json.Value<string>("version");
+            if (version != null && version != Sdk.VERSION) {
                 throw new SpeechletException("Request must conform to 1.0 schema.");
             }
 
-            SpeechletRequest request;
-            var requestJson = json.Value<JObject>("request");
-            var requestTypeParts = requestJson?.Value<string>("type")?.Split('.');
-            if (requestTypeParts == null) {
-                throw new ArgumentException("json");
-            }
-
-            var requestType = requestTypeParts[0];
-            var requestSubType = requestTypeParts.Length > 1 ? requestTypeParts[1] : null;
-
-            var requestId = requestJson?.Value<string>("requestId");
-            var timestamp = DateTimeHelpers.FromAlexaTimestamp(requestJson);
-            var locale = requestJson?.Value<string>("locale");
-            switch (requestType) {
-                case "LaunchRequest":
-                    request = new LaunchRequest(requestId, timestamp, locale);
-                    break;
-                case "IntentRequest":
-                    IntentRequest.DialogStateEnum dialogState = IntentRequest.DialogStateEnum.NONE;
-                    Enum.TryParse(requestJson.Value<string>("dialogState"), out dialogState);
-                    var intent = Intent.FromJson(requestJson.Value<JObject>("intent"));
-                    request = new IntentRequest(requestId, timestamp, locale, intent, dialogState);
-                    break;
-                case "SessionStartedRequest":
-                    request = new SessionStartedRequest(requestId, timestamp, locale);
-                    break;
-                case "SessionEndedRequest":
-                    SessionEndedRequest.ReasonEnum reason = SessionEndedRequest.ReasonEnum.NONE;
-                    Enum.TryParse(requestJson.Value<string>("reason"), out reason);
-                    request = new SessionEndedRequest(requestId, timestamp, locale, reason);
-                    break;
-                case "AudioPlayer":
-                    var token = requestJson?.Value<string>("token");
-                    var offset = requestJson?.Value<long>("offsetInMilliseconds") ?? 0;
-                    var playbackError = Error.FromJson(requestJson?.Value<JObject>("error"));
-                    var currentPlaybackState = PlaybackState.FromJson(requestJson?.Value<JObject>("currentPlaybackState"));
-                    switch (requestSubType) {
-                        case "PlaybackFailed":
-                            request = new AudioPlayerPlaybackFailedRequest(requestId, timestamp, locale, requestSubType, token, playbackError, currentPlaybackState);
-                            break;
-                        default:
-                            request = new AudioPlayerRequest(requestId, timestamp, locale, requestSubType, token, offset);
-                            break;
-                    }
-                    break;
-                case "PlaybackController":
-                    request = new PlaybackControllerRequest(requestId, timestamp, locale, requestType);
-                    break;
-                case "System":
-                    switch (requestSubType) {
-                        case "ExceptionEncountered":
-                            var error = Error.FromJson(requestJson?.Value<JObject>("error"));
-                            var cause = Cause.FromJson(requestJson?.Value<JObject>("cause"));
-                            request = new SystemExceptionEncounteredRequest(requestId, timestamp, locale, requestSubType, error, cause);
-                            break;
-                        default:
-                            throw new ArgumentException("json");
-                    }
-                    break;
-                default:
-                    throw new ArgumentException("json");
-            }
-
             return new SpeechletRequestEnvelope {
-                Request = request,
+                Request = SpeechletRequest.FromJson(json.Value<JObject>("request")),
                 Session = Session.FromJson(json.Value<JObject>("session")),
-                Version = json.Value<string>("version"),
+                Version = version,
                 Context = Context.FromJson(json.Value<JObject>("context"))
             };
         }

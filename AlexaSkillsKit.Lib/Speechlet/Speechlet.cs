@@ -51,8 +51,6 @@ namespace AlexaSkillsKit.Speechlet
             return result == SpeechletRequestValidationResult.OK;
         }
 
-        public abstract AudioPlayerResponse OnAudioPlayer(AudioPlayerRequest audioRequest, Context context);
-        public abstract AudioPlayerResponse OnPlaybackController(PlaybackControllerRequest playbackRequest, Context context);
         public abstract void OnSystemExceptionEncountered(SystemExceptionEncounteredRequest systemRequest, Context context);
 
         public abstract SpeechletResponse OnIntent(IntentRequest intentRequest, Session session, Context context);

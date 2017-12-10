@@ -2,15 +2,18 @@
 
 using System;
 using AlexaSkillsKit.Slu;
+using Newtonsoft.Json.Linq;
 
 namespace AlexaSkillsKit.Speechlet
 {
     public class IntentRequest : SpeechletRequest
     {
-        public IntentRequest(string requestId, DateTime timestamp, string locale, Intent intent, DialogStateEnum dialogState)  
-            : base(requestId, timestamp, locale) {
+        public IntentRequest(JObject json) : base(json) {
+            Intent = Intent.FromJson(json.Value<JObject>("intent"));
 
-            Intent = intent;
+            DialogStateEnum dialogState = DialogStateEnum.UNKNOWN;
+            Enum.TryParse(json.Value<string>("dialogState"), out dialogState);
+            DialogState = dialogState;
         }
 
         public virtual Intent Intent {
@@ -26,7 +29,7 @@ namespace AlexaSkillsKit.Speechlet
 
         public enum DialogStateEnum
         {
-            NONE = 0, // default in case parsing fails
+            UNKNOWN = 0, // default in case parsing fails
             STARTED,
             IN_PROGRESS,
             COMPLETED

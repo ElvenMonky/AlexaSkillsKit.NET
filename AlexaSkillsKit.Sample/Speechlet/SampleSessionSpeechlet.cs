@@ -22,15 +22,7 @@ namespace Sample.Controllers
         private const string NAME_SLOT = "Name";
 
 
-        public override AudioPlayerResponse OnAudioPlayer(AudioPlayerRequest audioRequest, Context context) {
-            throw new NotImplementedException();
-        }
-
         public override void OnSystemExceptionEncountered(SystemExceptionEncounteredRequest systemRequest, Context context) {
-            throw new NotImplementedException();
-        }
-
-        public override AudioPlayerResponse OnPlaybackController(PlaybackControllerRequest playbackRequest, Context context) {
             throw new NotImplementedException();
         }
 
