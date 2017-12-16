@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Stefan Negritoiu</Authors>
+    <Company>Stefan Negritoiu</Company>
+    <Product>AlexaSkillsKit</Product>
+    <Version>1.5.0</Version>
+    <Copyright>Copyright © 2015 Stefan Negritoiu (FreeBusy)</Copyright>
+    <PackageLicenseUrl>MIT</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/AreYouFreeBusy/AlexaSkillsKit.NET.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>Amazon Alexa Skill System.Net.Http</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlexaSkillsKit.Lib\AlexaSkillsKit.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,7 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using AlexaSkillsKit.Requests;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-namespace AlexaSkillsKit.Speechlet
+namespace AlexaSkillsKit.Json
 {
     public static class SpeechletRequestResolver
     {
@@ -14,8 +15,22 @@ namespace AlexaSkillsKit.Speechlet
             return resolvers[type].FromJson(subtype, json);
         }
 
-        public static void UseInterface(string name, InterfaceResolver resolver) {
+        public static void AddInterface(string name, InterfaceResolver resolver) {
             resolvers[name] = resolver;
+        }
+
+        public static void AddStandard() {
+            var standardResolver = new InterfaceResolver()
+                .WithDeserializer(nameof(LaunchRequest), (json, subtype) => new LaunchRequest(json))
+                .WithDeserializer(nameof(IntentRequest), (json, subtype) => new IntentRequest(json))
+                .WithDeserializer(nameof(SessionEndedRequest), (json, subtype) => new SessionEndedRequest(json));
+            AddInterface(string.Empty, standardResolver);
+        }
+
+        public static void AddSystem() {
+            var systemResolver = new InterfaceResolver()
+                .WithDeserializer("ExceptionEncountered", (json, subtype) => new SystemExceptionEncounteredRequest(json, subtype));
+            AddInterface("System", systemResolver);
         }
     }
 }

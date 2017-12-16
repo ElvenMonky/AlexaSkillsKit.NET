@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Lib", "AlexaSkillsKit.Lib\AlexaSkillsKit.Lib.csproj", "{0EC882A8-AACA-4BD5-B449-72F20FDB8586}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Sample", "AlexaSkillsKit.Sample\AlexaSkillsKit.Sample.csproj", "{9FDEF793-5832-4D37-B0D5-62C55AB1C12E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D35AD75F-7926-41CB-8C8D-BB36370F3E76}"
@@ -16,16 +14,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D35AD7
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Tests", "AlexaSkillsKit.Tests\AlexaSkillsKit.Tests.csproj", "{D0125A95-FD63-4A33-9220-206D4A1A14F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Http", "AlexaSkillsKit.Http\AlexaSkillsKit.Http.csproj", "{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaSkillsKit.Core", "AlexaSkillsKit.Lib\AlexaSkillsKit.Core.csproj", "{01B7FA9F-5F29-46FA-8E27-B731A2A95876}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Interfaces.AudioPlayer", "AlexaSkillsKit.Interfaces.AudioPlayer\AlexaSkillsKit.Interfaces.AudioPlayer.csproj", "{2D25EE87-D293-4A62-BCEC-AACB4099ED9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Interfaces.Display", "AlexaSkillsKit.Interfaces.Display\AlexaSkillsKit.Interfaces.Display.csproj", "{6224BE94-2A4B-4AB2-BA8A-4BD3DF47FC4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Interfaces.Dialog", "AlexaSkillsKit.Interfaces.Dialog\AlexaSkillsKit.Interfaces.Dialog.csproj", "{39F798E3-70FE-419A-AF58-E0A181A42A40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Interfaces.VideoApp", "AlexaSkillsKit.Interfaces.VideoApp\AlexaSkillsKit.Interfaces.VideoApp.csproj", "{1517FE44-37AF-4585-AF54-0A20F222CFCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0EC882A8-AACA-4BD5-B449-72F20FDB8586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0EC882A8-AACA-4BD5-B449-72F20FDB8586}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EC882A8-AACA-4BD5-B449-72F20FDB8586}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0EC882A8-AACA-4BD5-B449-72F20FDB8586}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FDEF793-5832-4D37-B0D5-62C55AB1C12E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9FDEF793-5832-4D37-B0D5-62C55AB1C12E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FDEF793-5832-4D37-B0D5-62C55AB1C12E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -34,8 +40,35 @@ Global
 		{D0125A95-FD63-4A33-9220-206D4A1A14F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0125A95-FD63-4A33-9220-206D4A1A14F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0125A95-FD63-4A33-9220-206D4A1A14F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01B7FA9F-5F29-46FA-8E27-B731A2A95876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01B7FA9F-5F29-46FA-8E27-B731A2A95876}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01B7FA9F-5F29-46FA-8E27-B731A2A95876}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01B7FA9F-5F29-46FA-8E27-B731A2A95876}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D25EE87-D293-4A62-BCEC-AACB4099ED9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D25EE87-D293-4A62-BCEC-AACB4099ED9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D25EE87-D293-4A62-BCEC-AACB4099ED9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D25EE87-D293-4A62-BCEC-AACB4099ED9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6224BE94-2A4B-4AB2-BA8A-4BD3DF47FC4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6224BE94-2A4B-4AB2-BA8A-4BD3DF47FC4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6224BE94-2A4B-4AB2-BA8A-4BD3DF47FC4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6224BE94-2A4B-4AB2-BA8A-4BD3DF47FC4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39F798E3-70FE-419A-AF58-E0A181A42A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39F798E3-70FE-419A-AF58-E0A181A42A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39F798E3-70FE-419A-AF58-E0A181A42A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39F798E3-70FE-419A-AF58-E0A181A42A40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1517FE44-37AF-4585-AF54-0A20F222CFCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1517FE44-37AF-4585-AF54-0A20F222CFCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1517FE44-37AF-4585-AF54-0A20F222CFCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1517FE44-37AF-4585-AF54-0A20F222CFCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {802C7A13-5ADB-4355-91E6-AEF17F26AB36}
 	EndGlobalSection
 EndGlobal

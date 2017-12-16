@@ -1,19 +1,12 @@
 ﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
 
-using System;
+using AlexaSkillsKit.Requests;
 using System.Threading.Tasks;
-using AlexaSkillsKit.Authentication;
-using AlexaSkillsKit.Json;
 
 namespace AlexaSkillsKit.Speechlet
 {
     public interface ISpeechletAsync
     {
-        Task<bool> OnRequestValidationAsync(
-            SpeechletRequestValidationResult result, DateTime referenceTimeUtc, SpeechletRequestEnvelope requestEnvelope);
-
-        Task OnSystemExceptionEncounteredAsync(SystemExceptionEncounteredRequest systemRequest, Context context);
-
         Task<SpeechletResponse> OnIntentAsync(IntentRequest intentRequest, Session session, Context context);
         Task<SpeechletResponse> OnLaunchAsync(LaunchRequest launchRequest, Session session);
         Task OnSessionStartedAsync(SessionStartedRequest sessionStartedRequest, Session session);

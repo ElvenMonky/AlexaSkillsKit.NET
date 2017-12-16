@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using System.Linq;
-using AlexaSkillsKit.Interfaces.Display;
-using AlexaSkillsKit.Interfaces.AudioPlayer;
+using AlexaSkillsKit.Json;
 
 namespace AlexaSkillsKit.Speechlet
 {
@@ -11,14 +10,6 @@ namespace AlexaSkillsKit.Speechlet
     /// </summary>
     public class SupportedInterfaces : Dictionary<string, ISpeechletInterface>
     {
-        /// <summary>
-        /// Register supported interfaces for deserialization
-        /// </summary>
-        static SupportedInterfaces() {
-            Deserializer<ISpeechletInterface>.RegisterDeserializer("Display", DisplayInterface.FromJson);
-            Deserializer<ISpeechletInterface>.RegisterDeserializer("AudioPlayer", AudioPlayerInterface.FromJson);
-        }
-
         public static SupportedInterfaces FromJson(JObject json) {
             if (json == null) return null;
 

@@ -1,7 +1,6 @@
 ﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy) and contributors. See LICENSE file for more information.
 
 using System;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace AlexaSkillsKit.Helpers

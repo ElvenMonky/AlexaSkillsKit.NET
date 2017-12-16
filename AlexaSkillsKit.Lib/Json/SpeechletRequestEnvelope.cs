@@ -4,6 +4,8 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using AlexaSkillsKit.Speechlet;
+using AlexaSkillsKit.Requests;
+using AlexaSkillsKit.Authentication;
 
 namespace AlexaSkillsKit.Json
 {
@@ -16,7 +18,7 @@ namespace AlexaSkillsKit.Json
         /// <returns></returns>
         public static SpeechletRequestEnvelope FromJson(string content) {
             if (String.IsNullOrEmpty(content)) {
-                throw new SpeechletException("Request content is empty");
+                throw new SpeechletValidationException(SpeechletRequestValidationResult.NoContent, "Request content is empty");
             }
 
             JObject json = JsonConvert.DeserializeObject<JObject>(content, Sdk.DeserializationSettings);
@@ -26,7 +28,7 @@ namespace AlexaSkillsKit.Json
         public static SpeechletRequestEnvelope FromJson(JObject json) {
             var version = json.Value<string>("version");
             if (version != null && version != Sdk.VERSION) {
-                throw new SpeechletException("Request must conform to 1.0 schema.");
+                throw new SpeechletValidationException(SpeechletRequestValidationResult.InvalidVersion, "Request must conform to 1.0 schema.");
             }
 
             return new SpeechletRequestEnvelope {
