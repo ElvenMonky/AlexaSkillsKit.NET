@@ -3,16 +3,16 @@
 * handles the (de)serialization of Alexa requests & responses into easy-to-use object models
 * verifies authenticity of the request by validating its signature and timestamp
 * code-reviewed and vetted by Amazon (Alexa skills written using this library passed certification)
-:new: * supports following interfaces:
-** [AudioPlayer](https://developer.amazon.com/docs/custom-skills/audioplayer-interface-reference.html)
-** [PlaybackController](https://developer.amazon.com/docs/custom-skills/playback-controller-interface-reference.html)
-** [Display](https://developer.amazon.com/docs/custom-skills/display-interface-reference.html)
-** [Dialog](https://developer.amazon.com/docs/custom-skills/dialog-interface-reference.html)
-** [VideoApp](https://developer.amazon.com/docs/custom-skills/videoapp-interface-reference.html)
+* :new: supports following interfaces:
+  * [AudioPlayer](https://developer.amazon.com/docs/custom-skills/audioplayer-interface-reference.html)
+  * [PlaybackController](https://developer.amazon.com/docs/custom-skills/playback-controller-interface-reference.html)
+  * [Display](https://developer.amazon.com/docs/custom-skills/display-interface-reference.html)
+  * [Dialog](https://developer.amazon.com/docs/custom-skills/dialog-interface-reference.html)
+  * [VideoApp](https://developer.amazon.com/docs/custom-skills/videoapp-interface-reference.html)
 
 Beyond the functionality in Amazon's AlexaSkillsKit for Java, AlexaSkillsKit.NET:
 * performs automatic session management so you can easily [build conversational Alexa apps](https://freebusy.io/blog/building-conversational-alexa-apps-for-amazon-echo)
-:new: * can be extended to support custom and new coming interfaces (see [Advanced]() section)
+* :new: can be extended to support custom and new coming interfaces (see [Advanced]() section)
 
 This library was originally developed for and is in use at https://freebusy.io
 
@@ -33,7 +33,9 @@ Extensible version will be available as following NuGet packages:
 ### 1. Set up your development environment
 
 Read [Getting started with Alexa App development for Amazon Echo using .NET on Windows](https://freebusy.io/blog/getting-started-with-alexa-app-development-for-amazon-echo-using-dot-net)
-(only describes .Net Framework 4.x setup)
+for information on how you can setup you local certificate.
+
+Note, that if you are hosting your API in Amazon Lambda, Azure Function, Azure Web App or other well-known cloud service, you can use parent domain certificate instead of providing your own.
 
 ### 2. Implement your skill as a "Speechlet"
 
