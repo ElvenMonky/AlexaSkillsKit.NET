@@ -7,7 +7,7 @@ using System;
 
 namespace AlexaSkillsKit.Speechlet
 {
-    public abstract class SpeechletBase
+    public class SpeechletBase
     {
         public SpeechletService Service { get; } = new SpeechletService();
 
