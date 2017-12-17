@@ -12,7 +12,7 @@
 
 Beyond the functionality in Amazon's AlexaSkillsKit for Java, AlexaSkillsKit.NET:
 * performs automatic session management so you can easily [build conversational Alexa apps](https://freebusy.io/blog/building-conversational-alexa-apps-for-amazon-echo)
-* :new: can be extended to support custom and new coming interfaces (see [Advanced]() section)
+* :new: can be extended to support custom and new coming interfaces (see [Implement external interface](#Implement%20external%20interface) section)
 
 This library was originally developed for and is in use at https://freebusy.io
 
@@ -93,7 +93,7 @@ Request headers and body validation also takes place during this step. The `Spee
 
 Skill authors can set SpeechletService.ValidationHandler property to have better control on when exception should be thrown, or to throw custom exceptions instead.
 For backward compatibility, the `Speechlet` and `SpeechletAsync` helper abstract classes set `ValidationHandler` property of their internal service to virtual `OnRequestValidation` method.
-Setting `ValidationHandler` property will override this behavior. See [Override request validation policy](#Override request validation policy) for more details on request validation.
+Setting `ValidationHandler` property will override this behavior. See [Override request validation policy](#Override%20request%20validation%20policy) for more details on request validation.
 Request validation can be omitted by directly calling one of `SpeechletRequestEnvelope.FromJson` static methods.
 
 `SpeechletRequestEnvelope` consists of `Version`, `Session`, `Context` and `Request` fields. See [Context](#Context) for more details on parsing context.
@@ -114,8 +114,8 @@ Both `Speechlet` and `SpeechletAsync` are calling `SpeechletRequestResolver.AddS
 Each interface library that provide own requests is intended to provide method to register those requests in `SpeechletRequestResolver`.
 So do `AlexaSkillsKit.Interfaces.Display` in its `void AddDisplay(this SpeechletService service, IDisplaySpeechletAsync speechlet)` extention method
 and `AlexaSkillsKit.Interfaces.AudioPlayer` in `void AddAudioPlayer(this SpeechletService service, IAudioPlayerSpeechletAsync speechlet)`.
-For more information on using external interfaces see [Use external interfaces](#Use external interfaces).
-For more information on registering custom interfaces see [Implement external interface](#Implement external interface).
+For more information on using external interfaces see [Use external interfaces](#Use%20external%20interfaces).
+For more information on registering custom interfaces see [Implement external interface](#Implement%20external%20interface).
 
 ### Processing request
 
