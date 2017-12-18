@@ -16,7 +16,7 @@ namespace AlexaSkillsKit.Speechlet
 
         public Func<SpeechletRequestValidationResult, DateTime, SpeechletRequestEnvelope, bool> ValidationHandler { get; set; }
 
-        public SpeechletRequestResolver RequestResolver { get; set; }
+        public SpeechletRequestResolver RequestResolver { get; } = new SpeechletRequestResolver();
 
         public void AddHandler<T>(Func<T, Session, Context, Task<ISpeechletResponse>> handler) where T : SpeechletRequest {
             handlers[typeof(T)] = async (request, session, context) => await handler(request as T, session, context);
