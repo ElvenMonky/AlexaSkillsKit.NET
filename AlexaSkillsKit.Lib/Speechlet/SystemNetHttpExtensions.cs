@@ -1,15 +1,14 @@
 ﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
 
-using AlexaSkillsKit.Speechlet;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlexaSkillsKit.Http
+namespace AlexaSkillsKit.Speechlet
 {
-    public static class SpeechletServiceExtensions
+    public static class SystemNetHttpExtensions
     {
         /// <summary>
         /// Processes Alexa request AND validates request signature

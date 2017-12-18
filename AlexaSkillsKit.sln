@@ -1,23 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Sample", "AlexaSkillsKit.Sample\AlexaSkillsKit.Sample.csproj", "{9FDEF793-5832-4D37-B0D5-62C55AB1C12E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Tests", "AlexaSkillsKit.Tests\AlexaSkillsKit.Tests.csproj", "{D0125A95-FD63-4A33-9220-206D4A1A14F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Http", "AlexaSkillsKit.Http\AlexaSkillsKit.Http.csproj", "{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaSkillsKit", "AlexaSkillsKit.Lib\AlexaSkillsKit.csproj", "{01B7FA9F-5F29-46FA-8E27-B731A2A95876}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit", "AlexaSkillsKit.Lib\AlexaSkillsKit.csproj", "{01B7FA9F-5F29-46FA-8E27-B731A2A95876}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaSkillsKit.Interfaces.AudioPlayer", "AlexaSkillsKit.Interfaces.AudioPlayer\AlexaSkillsKit.Interfaces.AudioPlayer.csproj", "{2D25EE87-D293-4A62-BCEC-AACB4099ED9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Interfaces.AudioPlayer", "AlexaSkillsKit.Interfaces.AudioPlayer\AlexaSkillsKit.Interfaces.AudioPlayer.csproj", "{2D25EE87-D293-4A62-BCEC-AACB4099ED9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaSkillsKit.Interfaces.Display", "AlexaSkillsKit.Interfaces.Display\AlexaSkillsKit.Interfaces.Display.csproj", "{6224BE94-2A4B-4AB2-BA8A-4BD3DF47FC4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Interfaces.Display", "AlexaSkillsKit.Interfaces.Display\AlexaSkillsKit.Interfaces.Display.csproj", "{6224BE94-2A4B-4AB2-BA8A-4BD3DF47FC4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaSkillsKit.Interfaces.Dialog", "AlexaSkillsKit.Interfaces.Dialog\AlexaSkillsKit.Interfaces.Dialog.csproj", "{39F798E3-70FE-419A-AF58-E0A181A42A40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Interfaces.Dialog", "AlexaSkillsKit.Interfaces.Dialog\AlexaSkillsKit.Interfaces.Dialog.csproj", "{39F798E3-70FE-419A-AF58-E0A181A42A40}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlexaSkillsKit.Interfaces.VideoApp", "AlexaSkillsKit.Interfaces.VideoApp\AlexaSkillsKit.Interfaces.VideoApp.csproj", "{1517FE44-37AF-4585-AF54-0A20F222CFCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlexaSkillsKit.Interfaces.VideoApp", "AlexaSkillsKit.Interfaces.VideoApp\AlexaSkillsKit.Interfaces.VideoApp.csproj", "{1517FE44-37AF-4585-AF54-0A20F222CFCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{D0125A95-FD63-4A33-9220-206D4A1A14F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0125A95-FD63-4A33-9220-206D4A1A14F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0125A95-FD63-4A33-9220-206D4A1A14F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{742331B9-5325-4F3F-B41F-EC41DFF9BD0C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{01B7FA9F-5F29-46FA-8E27-B731A2A95876}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{01B7FA9F-5F29-46FA-8E27-B731A2A95876}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01B7FA9F-5F29-46FA-8E27-B731A2A95876}.Release|Any CPU.ActiveCfg = Release|Any CPU

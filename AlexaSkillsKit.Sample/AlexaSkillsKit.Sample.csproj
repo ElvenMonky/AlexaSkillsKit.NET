@@ -315,10 +315,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AlexaSkillsKit.Http\AlexaSkillsKit.Http.csproj">
-      <Project>{742331b9-5325-4f3f-b41f-ec41dff9bd0c}</Project>
-      <Name>AlexaSkillsKit.Http</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AlexaSkillsKit.Interfaces.Display\AlexaSkillsKit.Interfaces.Display.csproj">
       <Project>{6224BE94-2A4B-4AB2-BA8A-4BD3DF47FC4F}</Project>
       <Name>AlexaSkillsKit.Interfaces.Display</Name>
