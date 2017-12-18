@@ -4,7 +4,6 @@ using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using AlexaSkillsKit.Speechlet;
-using AlexaSkillsKit.Requests;
 using AlexaSkillsKit.Authentication;
 
 namespace AlexaSkillsKit.Json

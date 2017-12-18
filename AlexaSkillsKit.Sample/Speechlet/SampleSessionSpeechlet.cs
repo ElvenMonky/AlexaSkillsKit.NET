@@ -4,7 +4,6 @@ using AlexaSkillsKit.Interfaces.Display;
 using AlexaSkillsKit.Interfaces.Display.Directives;
 using AlexaSkillsKit.Interfaces.VideoApp;
 using AlexaSkillsKit.Interfaces.VideoApp.Directives;
-using AlexaSkillsKit.Requests;
 using AlexaSkillsKit.Slu;
 using AlexaSkillsKit.Speechlet;
 using AlexaSkillsKit.UI;

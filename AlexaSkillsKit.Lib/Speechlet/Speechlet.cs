@@ -1,8 +1,5 @@
 ﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
 
-using AlexaSkillsKit.Requests;
-using System;
-
 namespace AlexaSkillsKit.Speechlet
 {
     public abstract class Speechlet : SpeechletBase, ISpeechlet

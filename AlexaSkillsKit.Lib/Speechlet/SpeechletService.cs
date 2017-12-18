@@ -1,6 +1,5 @@
 ﻿using AlexaSkillsKit.Authentication;
 using AlexaSkillsKit.Json;
-using AlexaSkillsKit.Requests;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

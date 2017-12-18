@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace AlexaSkillsKit.Requests
+namespace AlexaSkillsKit.Speechlet
 {
     /// <summary>
     /// https://developer.amazon.com/docs/custom-skills/request-and-response-json-reference.html#request-body-parameters

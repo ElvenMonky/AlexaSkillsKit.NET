@@ -1,6 +1,6 @@
 ﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
 
-namespace AlexaSkillsKit.Requests
+namespace AlexaSkillsKit.Speechlet
 {
     public class SessionStartedRequest : SpeechletRequest
     {

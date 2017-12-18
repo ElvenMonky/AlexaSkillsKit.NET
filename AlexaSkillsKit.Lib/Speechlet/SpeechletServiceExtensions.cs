@@ -1,5 +1,4 @@
 ﻿using AlexaSkillsKit.Json;
-using AlexaSkillsKit.Requests;
 
 namespace AlexaSkillsKit.Speechlet
 {

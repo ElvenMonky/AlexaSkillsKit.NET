@@ -2,7 +2,7 @@
 
 using Newtonsoft.Json.Linq;
 
-namespace AlexaSkillsKit.Requests
+namespace AlexaSkillsKit.Speechlet
 {
     public class LaunchRequest : SpeechletRequest
     {

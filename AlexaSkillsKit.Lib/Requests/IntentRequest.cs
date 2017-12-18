@@ -1,10 +1,10 @@
 ﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
 
-using System;
 using AlexaSkillsKit.Slu;
 using Newtonsoft.Json.Linq;
+using System;
 
-namespace AlexaSkillsKit.Requests
+namespace AlexaSkillsKit.Speechlet
 {
     public class IntentRequest : SpeechletRequest
     {

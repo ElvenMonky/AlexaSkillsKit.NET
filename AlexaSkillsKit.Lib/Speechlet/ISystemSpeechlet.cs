@@ -1,6 +1,4 @@
-﻿using AlexaSkillsKit.Requests;
-
-namespace AlexaSkillsKit.Speechlet
+﻿namespace AlexaSkillsKit.Speechlet
 {
     public interface ISystemSpeechlet
     {

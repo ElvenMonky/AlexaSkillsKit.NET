@@ -1,7 +1,6 @@
-﻿using AlexaSkillsKit.Speechlet;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 
-namespace AlexaSkillsKit.Requests
+namespace AlexaSkillsKit.Speechlet
 {
     /// <summary>
     /// https://developer.amazon.com/docs/custom-skills/audioplayer-interface-reference.html#system-exceptionencountered

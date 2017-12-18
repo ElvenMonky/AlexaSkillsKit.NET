@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 
-namespace AlexaSkillsKit.Requests
+namespace AlexaSkillsKit.Speechlet
 {
     public abstract class SpeechletRequest
     {

@@ -1,4 +1,4 @@
-﻿using AlexaSkillsKit.Requests;
+﻿using AlexaSkillsKit.Speechlet;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

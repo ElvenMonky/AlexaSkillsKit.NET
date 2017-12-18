@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AlexaSkillsKit" Version="2.0.0" />
+    <ProjectReference Include="..\AlexaSkillsKit.Lib\AlexaSkillsKit.csproj" />
   </ItemGroup>
 
 </Project>
