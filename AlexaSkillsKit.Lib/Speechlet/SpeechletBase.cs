@@ -4,6 +4,7 @@ using AlexaSkillsKit.Authentication;
 using AlexaSkillsKit.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace AlexaSkillsKit.Speechlet
 {
@@ -22,7 +23,7 @@ namespace AlexaSkillsKit.Speechlet
         /// <param name="requestContent"></param>
         /// <returns></returns>
         public string ProcessRequest(string requestContent) {
-            var request = SpeechletRequestEnvelope.FromJson(requestContent);
+            var request = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestContent);
             return AsyncHelpers.RunSync(async () => (await Service.ProcessRequestAsync(request))?.ToJson());
         }
 
@@ -33,8 +34,25 @@ namespace AlexaSkillsKit.Speechlet
         /// <param name="requestJson"></param>
         /// <returns></returns>
         public string ProcessRequest(JObject requestJson) {
-            var request = SpeechletRequestEnvelope.FromJson(requestJson);
+            var request = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestJson);
             return AsyncHelpers.RunSync(async () => (await Service.ProcessRequestAsync(request))?.ToJson());
+        }
+
+
+        public async Task<string> ProcessRequestAsync(string requestContent) {
+            var request = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestContent);
+            return (await Service.ProcessRequestAsync(request))?.ToJson();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="requestJson"></param>
+        /// <returns></returns>
+        public async Task<string> ProcessRequestAsync(JObject requestJson) {
+            var request = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestJson);
+            return (await Service.ProcessRequestAsync(request))?.ToJson();
         }
 
 

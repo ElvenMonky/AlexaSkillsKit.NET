@@ -16,7 +16,7 @@ namespace AlexaSkillsKit.Speechlet
                 return null;
             });
 
-            SpeechletRequestResolver.AddStandard();
+            service.RequestResolver.AddStandard();
         }
 
         public static void AddStandard(this SpeechletService service, ISpeechlet speechlet) {
@@ -29,7 +29,7 @@ namespace AlexaSkillsKit.Speechlet
                 return null;
             });
 
-            SpeechletRequestResolver.AddSystem();
+            service.RequestResolver.AddSystem();
         }
 
         public static void AddSystem(this SpeechletService service, ISystemSpeechlet speechlet) {

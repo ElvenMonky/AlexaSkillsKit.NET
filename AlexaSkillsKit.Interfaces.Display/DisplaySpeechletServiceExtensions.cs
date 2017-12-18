@@ -14,7 +14,7 @@ namespace AlexaSkillsKit.Interfaces.Display
 
             var displayResolver = new InterfaceResolver()
                 .WithDefaultDeserializer((json, subtype) => new DisplayRequest(json, subtype));
-            SpeechletRequestResolver.AddInterface("Display", displayResolver);
+            service.RequestResolver.AddInterface("Display", displayResolver);
 
             service.AddHandler<DisplayRequest>(async (request, context) => await speechlet.OnDisplayAsync(request, context));
         }
