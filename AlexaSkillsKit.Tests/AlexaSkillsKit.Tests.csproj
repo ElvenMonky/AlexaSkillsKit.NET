@@ -87,9 +87,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AlexaSkillsKit.Lib\AlexaSkillsKit.Core.csproj">
+    <ProjectReference Include="..\AlexaSkillsKit.Lib\AlexaSkillsKit.csproj">
       <Project>{01b7fa9f-5f29-46fa-8e27-b731a2a95876}</Project>
-      <Name>AlexaSkillsKit.Core</Name>
+      <Name>AlexaSkillsKit</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

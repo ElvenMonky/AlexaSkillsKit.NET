@@ -327,9 +327,9 @@
       <Project>{1517FE44-37AF-4585-AF54-0A20F222CFCB}</Project>
       <Name>AlexaSkillsKit.Interfaces.VideoApp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AlexaSkillsKit.Lib\AlexaSkillsKit.Core.csproj">
+    <ProjectReference Include="..\AlexaSkillsKit.Lib\AlexaSkillsKit.csproj">
       <Project>{01b7fa9f-5f29-46fa-8e27-b731a2a95876}</Project>
-      <Name>AlexaSkillsKit.Core</Name>
+      <Name>AlexaSkillsKit</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

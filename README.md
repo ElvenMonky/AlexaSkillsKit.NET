@@ -19,7 +19,7 @@ This library was originally developed for and is in use at https://freebusy.io
 Library is currently available as a single NuGet package: https://www.nuget.org/packages/AlexaSkillsKit.Net/
 
 Extensible version will be available as following NuGet packages:
-* https://www.nuget.org/packages/AlexaSkillsKit.Core/ - core library
+* https://www.nuget.org/packages/AlexaSkillsKit/ - core library
 * https://www.nuget.org/packages/AlexaSkillsKit.Http/ - System.Net.Http provider extentions
 * https://www.nuget.org/packages/AlexaSkillsKit.AspNetCore/ - ASP.Net Core Web API provider extentions
 * https://www.nuget.org/packages/AlexaSkillsKit.Interfaces.AudioPlayer/ - adds support of AudioPlayer and PlaybackController interfaces

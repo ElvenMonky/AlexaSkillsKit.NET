@@ -2,20 +2,27 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.1</TargetFramework>
-      <Product>AlexaSkillsKit</Product>
-      <Copyright>Copyright © 2015 Stefan Negritoiu (FreeBusy)</Copyright>
-      <Company />
-      <Authors>Stefan Negritoiu</Authors>
-      <Version>1.5.0</Version>
-      <RepositoryUrl>https://github.com/AreYouFreeBusy/AlexaSkillsKit.NET.git</RepositoryUrl>
-      <RepositoryType>git</RepositoryType>
-      <PackageLicenseUrl>MIT</PackageLicenseUrl>
-      <PackageTags>Amazon Alexa Skill .Net</PackageTags>
-      <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Product>AlexaSkillsKit</Product>
+    <Copyright>Copyright © 2018 Stefan Negritoiu (FreeBusy) and contributors</Copyright>
+    <Company />
+    <Authors>Stefan Negritoiu (FreeBusy)</Authors>
+    <Owners>Stefan Negritoiu (FreeBusy)</Owners>
+    <Version>2.0.0</Version>
+    <RepositoryUrl>https://github.com/AreYouFreeBusy/AlexaSkillsKit.NET.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageTags>Amazon Alexa Skill Echo Show Speechlet .Net VideoApp interface</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://developer.amazon.com/public/binaries/content/gallery/developerportalpublic/solutions/alexa/dp_image_kit_02.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/AreYouFreeBusy/AlexaSkillsKit.NET</PackageProjectUrl>
+    <Description>VideoApp interface support for AlexaSkillsKit</Description>
+    <PackageReleaseNotes>
+      2.0.0: Extract VideoApp interface to separate library
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlexaSkillsKit.Lib\AlexaSkillsKit.Core.csproj" />
+    <PackageReference Include="AlexaSkillsKit" Version="2.0.0" />
   </ItemGroup>
 
 </Project>
