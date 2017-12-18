@@ -1,5 +1,6 @@
 ﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
 
+using AlexaSkillsKit.Speechlet;
 using Newtonsoft.Json.Linq;
 using System;
 
@@ -12,9 +13,15 @@ namespace AlexaSkillsKit.Requests
             ReasonEnum reason = ReasonEnum.UNKNOWN;
             Enum.TryParse(json.Value<string>("reason"), out reason);
             Reason = reason;
+            Error = Error.FromJson(json.Value<JObject>("error"));
         }
 
         public virtual ReasonEnum Reason {
+            get;
+            private set;
+        }
+
+        public Error Error {
             get;
             private set;
         }
