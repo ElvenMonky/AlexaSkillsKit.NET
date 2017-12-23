@@ -1,11 +1,9 @@
-﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
-
-using AlexaSkillsKit.Authentication;
+﻿using AlexaSkillsKit.Authentication;
 using System;
 
 namespace AlexaSkillsKit.Speechlet
 {
-    public class SpeechletValidationException: SpeechletException
+    public class SpeechletValidationException : SpeechletException
     {
         public SpeechletRequestValidationResult ValidationResult { get; }
 

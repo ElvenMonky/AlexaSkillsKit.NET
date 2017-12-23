@@ -18,41 +18,32 @@ namespace AlexaSkillsKit.Speechlet
 
 
         /// <summary>
-        /// 
+        /// Processes Alexa request but does NOT validate request signature 
         /// </summary>
         /// <param name="requestContent"></param>
         /// <returns></returns>
         public string ProcessRequest(string requestContent) {
-            var request = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestContent);
-            return AsyncHelpers.RunSync(async () => (await Service.ProcessRequestAsync(request))?.ToJson());
+            return AsyncHelpers.RunSync(async () => await ProcessRequestAsync(requestContent));
         }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="requestJson"></param>
-        /// <returns></returns>
-        public string ProcessRequest(JObject requestJson) {
-            var request = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestJson);
-            return AsyncHelpers.RunSync(async () => (await Service.ProcessRequestAsync(request))?.ToJson());
-        }
-
 
         public async Task<string> ProcessRequestAsync(string requestContent) {
-            var request = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestContent);
-            return (await Service.ProcessRequestAsync(request))?.ToJson();
+            var requestEnvelope = SpeechletRequestEnvelope.FromJson(requestContent);
+            return (await Service.ProcessRequestAsync(requestEnvelope))?.ToJson();
         }
 
 
         /// <summary>
-        /// 
+        /// Processes Alexa request but does NOT validate request signature 
         /// </summary>
         /// <param name="requestJson"></param>
         /// <returns></returns>
+        public virtual string ProcessRequest(JObject requestJson) {
+            return AsyncHelpers.RunSync(async () => await ProcessRequestAsync(requestJson));
+        }
+
         public async Task<string> ProcessRequestAsync(JObject requestJson) {
-            var request = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestJson);
-            return (await Service.ProcessRequestAsync(request))?.ToJson();
+            var requestEnvelope = SpeechletRequestEnvelope.FromJson(requestJson);
+            return (await Service.ProcessRequestAsync(requestEnvelope))?.ToJson();
         }
 
 
