@@ -37,18 +37,20 @@ namespace AlexaSkillsKit.Speechlet
                 validationResult |= SpeechletRequestValidationResult.NoSignatureHeader;
             }
 
-            var alexaBytes = Encoding.UTF8.GetBytes(content);
-
             // attempt to verify signature only if we were able to locate certificate and signature headers
             if (validationResult == SpeechletRequestValidationResult.OK) {
-                if (!(await SpeechletRequestSignatureVerifier.VerifyRequestSignatureAsync(alexaBytes, signature, chainUrl))) {
+                var alexaBytes = Encoding.UTF8.GetBytes(content);
+
+                if (!await SpeechletRequestSignatureVerifier.VerifyRequestSignatureAsync(alexaBytes, signature, chainUrl)) {
                     validationResult |= SpeechletRequestValidationResult.InvalidSignature;
                 }
             }
 
-            SpeechletRequestEnvelope alexaRequest = null;
+            SpeechletRequestEnvelope result = null;
             try {
-                alexaRequest = SpeechletRequestEnvelope.FromJson(RequestResolver, content);
+
+
+                result = SpeechletRequestEnvelope.FromJson(RequestResolver, content);
             }
             catch (SpeechletValidationException ex) {
                 validationResult |= ex.ValidationResult;
@@ -58,23 +60,26 @@ namespace AlexaSkillsKit.Speechlet
                 validationResult |= SpeechletRequestValidationResult.InvalidJson;
             }
 
-            DateTime now = DateTime.UtcNow; // reference time for this request
+            var success = false;
 
             // attempt to verify timestamp only if we were able to parse request body
-            if (alexaRequest != null) {
-                if (!SpeechletRequestTimestampVerifier.VerifyRequestTimestamp(alexaRequest, now)) {
+            if (result != null) {
+                var now = DateTime.UtcNow; // reference time for this request
+
+                if (!SpeechletRequestTimestampVerifier.VerifyRequestTimestamp(result, now)) {
                     validationResult |= SpeechletRequestValidationResult.InvalidTimestamp;
                 }
-            }
 
-            var success = ValidationHandler?.Invoke(validationResult, now, alexaRequest) ?? (validationResult == SpeechletRequestValidationResult.OK);
+                success = ValidationHandler?.Invoke(validationResult, now, result) ?? (validationResult == SpeechletRequestValidationResult.OK);
+            }
 
             if (!success) {
                 throw new SpeechletValidationException(validationResult);
             }
 
-            return alexaRequest;
+            return result;
         }
+
 
         /// <summary>
         /// 
@@ -82,7 +87,7 @@ namespace AlexaSkillsKit.Speechlet
         /// <param name="requestEnvelope"></param>
         /// <returns></returns>
         public async Task<SpeechletResponseEnvelope> ProcessRequestAsync(SpeechletRequestEnvelope requestEnvelope) {
-            Session session = requestEnvelope.Session;
+            var session = requestEnvelope.Session;
             var context = requestEnvelope.Context;
             var request = requestEnvelope.Request;
             ISpeechletResponse response = null;
@@ -113,8 +118,16 @@ namespace AlexaSkillsKit.Speechlet
             return responseEnvelope;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void DoSessionManagement(IntentRequest request, Session session) {
             if (request == null) return;
+
+            if (session.Attributes == null) {
+                session.Attributes = new Dictionary<string, string>();
+            }
 
             if (session.IsNew) {
                 session.Attributes[Session.INTENT_SEQUENCE] = request.Intent.Name;
