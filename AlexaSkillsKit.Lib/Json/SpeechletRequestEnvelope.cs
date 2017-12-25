@@ -10,21 +10,23 @@ namespace AlexaSkillsKit.Json
 {
     public class SpeechletRequestEnvelope
     {
+        public static SpeechletRequestParser RequestParser { get; } = new SpeechletRequestParser();
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static SpeechletRequestEnvelope FromJson(SpeechletRequestParser parser, string content) {
+        public static SpeechletRequestEnvelope FromJson(string content) {
             if (String.IsNullOrEmpty(content)) {
                 throw new SpeechletValidationException(SpeechletRequestValidationResult.NoContent, "Request content is empty");
             }
 
             JObject json = JsonConvert.DeserializeObject<JObject>(content, Sdk.DeserializationSettings);
-            return FromJson(parser, json);
+            return FromJson(json);
         }
 
-        public static SpeechletRequestEnvelope FromJson(SpeechletRequestParser parser, JObject json) {
+        public static SpeechletRequestEnvelope FromJson(JObject json) {
             var version = json.Value<string>("version");
             if (version != null && version != Sdk.VERSION) {
                 throw new SpeechletValidationException(SpeechletRequestValidationResult.InvalidVersion, "Request must conform to 1.0 schema.");
@@ -32,7 +34,7 @@ namespace AlexaSkillsKit.Json
 
             return new SpeechletRequestEnvelope {
                 Version = version,
-                Request = parser.Parse(json.Value<JObject>("request")),
+                Request = RequestParser.Parse(json.Value<JObject>("request")),
                 Session = Session.FromJson(json.Value<JObject>("session")),
                 Context = Context.FromJson(json.Value<JObject>("context"))
             };

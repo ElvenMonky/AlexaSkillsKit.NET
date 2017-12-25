@@ -14,12 +14,10 @@ namespace AlexaSkillsKit.Tests.Helpers
     
             SpeechletRequestValidationResult validationResult = SpeechletRequestValidationResult.OK;
             SpeechletRequestEnvelope alexaRequest = null;
-            var parser = new SpeechletRequestParser();
-            parser.AddStandard();
             var alexaContent = File.ReadAllText(TestDataFile);
 
             try {
-                alexaRequest = SpeechletRequestEnvelope.FromJson(parser, alexaContent);
+                alexaRequest = SpeechletRequestEnvelope.FromJson(alexaContent);
             }
             catch (Exception ex)
             when (ex is Newtonsoft.Json.JsonReaderException || ex is InvalidCastException || ex is FormatException) {
@@ -36,12 +34,10 @@ namespace AlexaSkillsKit.Tests.Helpers
 
             SpeechletRequestValidationResult validationResult = SpeechletRequestValidationResult.OK;
             SpeechletRequestEnvelope alexaRequest = null;
-            var parser = new SpeechletRequestParser();
-            parser.AddStandard();
             var alexaContent = File.ReadAllText(TestDataFile);
 
             try {
-                alexaRequest = SpeechletRequestEnvelope.FromJson(parser, alexaContent);
+                alexaRequest = SpeechletRequestEnvelope.FromJson(alexaContent);
             }
             catch (Exception ex)
             when (ex is Newtonsoft.Json.JsonReaderException || ex is InvalidCastException || ex is FormatException) {
@@ -58,12 +54,10 @@ namespace AlexaSkillsKit.Tests.Helpers
 
             SpeechletRequestValidationResult validationResult = SpeechletRequestValidationResult.OK;
             SpeechletRequestEnvelope alexaRequest = null;
-            var parser = new SpeechletRequestParser();
-            parser.AddStandard();
             var alexaContent = File.ReadAllText(TestDataFile);
 
             try {
-                alexaRequest = SpeechletRequestEnvelope.FromJson(parser, alexaContent);
+                alexaRequest = SpeechletRequestEnvelope.FromJson(alexaContent);
             }
             catch (Exception ex)
             when (ex is Newtonsoft.Json.JsonReaderException || ex is InvalidCastException || ex is FormatException) {

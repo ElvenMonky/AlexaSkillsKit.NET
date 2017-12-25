@@ -27,9 +27,5 @@ namespace AlexaSkillsKit.Json
                 return null;
             });
         }
-
-        public static void AddDisplay(this SpeechletRequestParser parser) {
-            
-        }
     }
 }

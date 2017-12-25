@@ -18,8 +18,6 @@ namespace AlexaSkillsKit.Speechlet
 
         public Func<SpeechletRequestValidationResult, DateTime, SpeechletRequestEnvelope, bool> ValidationHandler { get; set; }
 
-        public SpeechletRequestParser RequestParser { get; } = new SpeechletRequestParser();
-
         public void AddHandler<T>(Func<T, Session, Context, Task<ISpeechletResponse>> handler) where T : SpeechletRequest {
             handlers[typeof(T)] = async (request, session, context) => await handler(request as T, session, context);
         }
@@ -50,9 +48,7 @@ namespace AlexaSkillsKit.Speechlet
 
             SpeechletRequestEnvelope result = null;
             try {
-
-
-                result = SpeechletRequestEnvelope.FromJson(RequestParser, content);
+                result = SpeechletRequestEnvelope.FromJson(content);
             }
             catch (SpeechletValidationException ex) {
                 validationResult |= ex.ValidationResult;
