@@ -15,6 +15,6 @@ namespace AlexaSkillsKit.Authentication
         InvalidJson = 16,
         InvalidApplicationId = 32,
         NoContent = 64,
-        InvalidVersion = 128,
+        InvalidVersion = 128
     }
 }

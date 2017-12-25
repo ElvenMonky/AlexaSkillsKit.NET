@@ -14,6 +14,8 @@ namespace AlexaSkillsKit.Speechlet
         private IDictionary<Type, Func<SpeechletRequest, Session, Context, Task<ISpeechletResponse>>> handlers
             = new Dictionary<Type, Func<SpeechletRequest, Session, Context, Task<ISpeechletResponse>>>();
 
+        public string ApplicationId { get; set; }
+
         public Func<SpeechletRequestValidationResult, DateTime, SpeechletRequestEnvelope, bool> ValidationHandler { get; set; }
 
         public SpeechletRequestParser RequestParser { get; } = new SpeechletRequestParser();
@@ -68,6 +70,10 @@ namespace AlexaSkillsKit.Speechlet
 
                 if (!SpeechletRequestTimestampVerifier.VerifyRequestTimestamp(result, now)) {
                     validationResult |= SpeechletRequestValidationResult.InvalidTimestamp;
+                }
+
+                if (!string.IsNullOrEmpty(ApplicationId) && result.Context.System.Application.Id != ApplicationId) {
+                    validationResult |= SpeechletRequestValidationResult.InvalidApplicationId;
                 }
 
                 success = ValidationHandler?.Invoke(validationResult, now, result) ?? (validationResult == SpeechletRequestValidationResult.OK);
