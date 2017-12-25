@@ -21,8 +21,7 @@ namespace AlexaSkillsKit.Speechlet
             private set;
         }
 
-        public virtual DialogStateEnum DialogState
-        {
+        public virtual DialogStateEnum DialogState {
             get;
             private set;
         }

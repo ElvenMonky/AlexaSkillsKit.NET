@@ -8,7 +8,7 @@ namespace AlexaSkillsKit.Interfaces.AudioPlayer
     /// </summary>
     public class AudioPlayerPlaybackFailedRequest : AudioPlayerRequest
     {
-        public AudioPlayerPlaybackFailedRequest(JObject json, string subtype) : base(json, subtype) {
+        public AudioPlayerPlaybackFailedRequest(string subtype, JObject json) : base(subtype, json) {
             Error = Error.FromJson(json.Value<JObject>("error"));
             CurrentPlaybackState = PlaybackState.FromJson(json.Value<JObject>("currentPlaybackState"));
         }

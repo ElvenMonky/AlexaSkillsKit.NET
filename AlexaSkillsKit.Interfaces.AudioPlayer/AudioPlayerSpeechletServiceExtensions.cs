@@ -12,17 +12,19 @@ namespace AlexaSkillsKit.Interfaces.AudioPlayer
         public static void AddAudioPlayer(this SpeechletService service, IAudioPlayerSpeechletAsync speechlet) {
             Deserializer<ISpeechletInterface>.RegisterDeserializer("AudioPlayer", AudioPlayerInterface.FromJson);
 
-            var audioPlayerResolver = new InterfaceResolver()
-                .WithDefaultDeserializer((json, subtype) => new AudioPlayerRequest(json, subtype))
-                .WithDeserializer("PlaybackFailed", (json, subtype) => new AudioPlayerPlaybackFailedRequest(json, subtype));
-            service.RequestResolver.AddInterface("AudioPlayer", audioPlayerResolver);
+            service.RequestParser.AddInterface("AudioPlayer", (subtype, json) => {
+                switch (subtype) {
+                    case "PlaybackFailed":
+                        return new AudioPlayerPlaybackFailedRequest(subtype, json);
+                    default:
+                        return new AudioPlayerRequest(subtype, json);
+                }
+            });
 
             service.AddHandler<AudioPlayerRequest>(
                 async (request, context) => await speechlet.OnAudioPlayerAsync(request, context));
 
-            var playbackControllerResolver = new InterfaceResolver()
-                .WithDefaultDeserializer((json, subtype) => new PlaybackControllerRequest(json, subtype));
-            service.RequestResolver.AddInterface("PlaybackController", playbackControllerResolver);
+            service.RequestParser.AddInterface("PlaybackController", (subtype, json) => new PlaybackControllerRequest(subtype, json));
 
             service.AddHandler<PlaybackControllerRequest>(
                 async (request, context) => await speechlet.OnPlaybackControllerAsync(request, context));

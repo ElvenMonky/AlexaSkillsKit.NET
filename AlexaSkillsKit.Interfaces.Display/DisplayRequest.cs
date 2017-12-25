@@ -8,7 +8,7 @@ namespace AlexaSkillsKit.Interfaces.Display
     /// </summary>
     public class DisplayRequest : ExtendedSpeechletRequest
     {
-        public DisplayRequest(JObject json, string subtype) : base(json, subtype) {
+        public DisplayRequest(string subtype, JObject json) : base(subtype, json) {
             Token = json.Value<string>("token");
         }
 

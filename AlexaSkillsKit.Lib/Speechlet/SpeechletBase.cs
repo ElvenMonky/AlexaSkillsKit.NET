@@ -27,7 +27,7 @@ namespace AlexaSkillsKit.Speechlet
         }
 
         public async Task<string> ProcessRequestAsync(string requestContent) {
-            var requestEnvelope = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestContent);
+            var requestEnvelope = SpeechletRequestEnvelope.FromJson(Service.RequestParser, requestContent);
             return (await Service.ProcessRequestAsync(requestEnvelope))?.ToJson();
         }
 
@@ -42,7 +42,7 @@ namespace AlexaSkillsKit.Speechlet
         }
 
         public async Task<string> ProcessRequestAsync(JObject requestJson) {
-            var requestEnvelope = SpeechletRequestEnvelope.FromJson(Service.RequestResolver, requestJson);
+            var requestEnvelope = SpeechletRequestEnvelope.FromJson(Service.RequestParser, requestJson);
             return (await Service.ProcessRequestAsync(requestEnvelope))?.ToJson();
         }
 
