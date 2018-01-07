@@ -1,4 +1,6 @@
-﻿using AlexaSkillsKit.Speechlet;
+﻿using AlexaSkillsKit.Interfaces.AudioPlayer;
+using AlexaSkillsKit.Interfaces.Display;
+using AlexaSkillsKit.Speechlet;
 
 namespace AlexaSkillsKit.Json
 {
@@ -19,7 +21,7 @@ namespace AlexaSkillsKit.Json
         }
 
         public static void AddSystem(this SpeechletRequestParser parser) {
-            parser.AddInterface("System", (subtype, json) => {
+            parser.AddInterface(SystemRequest.TypeName, (subtype, json) => {
                 switch (subtype) {
                     case "ExceptionEncountered":
                         return new SystemExceptionEncounteredRequest(subtype, json);

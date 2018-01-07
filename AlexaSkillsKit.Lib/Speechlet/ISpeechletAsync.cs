@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 
 namespace AlexaSkillsKit.Speechlet
 {
-    public interface ISpeechletAsync
+    [Obsolete("Does not support context object. Implement ISpeechletWithContextAsync instead")]
+    public interface ISpeechletAsync : ISpeechletBase
     {
-        Task<SpeechletResponse> OnIntentAsync(IntentRequest intentRequest, Session session, Context context);
+        Task<SpeechletResponse> OnIntentAsync(IntentRequest intentRequest, Session session);
         Task<SpeechletResponse> OnLaunchAsync(LaunchRequest launchRequest, Session session);
         Task OnSessionStartedAsync(SessionStartedRequest sessionStartedRequest, Session session);
         Task OnSessionEndedAsync(SessionEndedRequest sessionEndedRequest, Session session);
