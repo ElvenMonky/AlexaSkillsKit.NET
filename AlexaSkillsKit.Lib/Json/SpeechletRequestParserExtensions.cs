@@ -29,24 +29,5 @@ namespace AlexaSkillsKit.Json
                 return null;
             });
         }
-
-        public static void AddAudioPlayer(this SpeechletRequestParser parser) {
-            parser.AddInterface(AudioPlayerRequest.TypeName, (subtype, json) => {
-                switch (subtype) {
-                    case "PlaybackFailed":
-                        return new AudioPlayerPlaybackFailedRequest(subtype, json);
-                    default:
-                        return new AudioPlayerRequest(subtype, json);
-                }
-            });
-        }
-
-        public static void AddPlaybackController(this SpeechletRequestParser parser) {
-            parser.AddInterface(PlaybackControllerRequest.TypeName, (subtype, json) => new PlaybackControllerRequest(subtype, json));
-        }
-
-        public static void AddDisplay(this SpeechletRequestParser parser) {
-            parser.AddInterface(DisplayRequest.TypeName, (subtype, json) => new DisplayRequest(subtype, json));
-        }
     }
 }

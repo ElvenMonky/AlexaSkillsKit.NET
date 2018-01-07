@@ -8,9 +8,7 @@ namespace AlexaSkillsKit.Interfaces.AudioPlayer
     /// </summary>
     public class PlaybackControllerRequest : ExtendedSpeechletRequest
     {
-        public static readonly string TypeName = "PlaybackController";
-
-        public PlaybackControllerRequest(string subtype, JObject json) : base(TypeName, subtype, json) {
+        public PlaybackControllerRequest(string subtype, JObject json) : base(subtype, json) {
         }
     }
 }

@@ -31,6 +31,10 @@ namespace AlexaSkillsKit.Speechlet
             return await Service.GetResponseAsync(httpRequest);
         }
 
+        public SpeechletBase() {
+            Service.ValidationHandler = OnRequestValidation;
+        }
+
 
         /// <summary>
         /// Processes Alexa request but does NOT validate request signature 

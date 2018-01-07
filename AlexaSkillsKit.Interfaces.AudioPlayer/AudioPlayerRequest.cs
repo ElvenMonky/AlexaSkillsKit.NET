@@ -8,9 +8,7 @@ namespace AlexaSkillsKit.Interfaces.AudioPlayer
     /// </summary>
     public class AudioPlayerRequest : ExtendedSpeechletRequest
     {
-        public static readonly string TypeName = "AudioPlayer";
-
-        public AudioPlayerRequest(string subtype, JObject json) : base(TypeName, subtype, json) {
+        public AudioPlayerRequest(string subtype, JObject json) : base(subtype, json) {
             Token = json.Value<string>("token");
             OffsetInMilliseconds = json.Value<long?>("offsetInMilliseconds");
         }

@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <Product>AlexaSkillsKit</Product>
+    <Copyright>Copyright © 2018 Stefan Negritoiu (FreeBusy) and contributors</Copyright>
+    <Company />
+    <Authors>Stefan Negritoiu (FreeBusy)</Authors>
+    <Owners>Stefan Negritoiu (FreeBusy)</Owners>
+    <Version>2.0.0</Version>
+    <RepositoryUrl>https://github.com/AreYouFreeBusy/AlexaSkillsKit.NET.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <PackageTags>Amazon Alexa Skill Echo Show Speechlet .Net</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://developer.amazon.com/public/binaries/content/gallery/developerportalpublic/solutions/alexa/dp_image_kit_02.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/AreYouFreeBusy/AlexaSkillsKit.NET</PackageProjectUrl>
+    <Description>.NET library that simplifies Alexa skills development; same object model as Amazon's AlexaSkillsKit for Java</Description>
+    <PackageReleaseNotes>
+1.3.0: Incorporated Sept 2015 ASK update for account linking and access tokens
+1.4.0: Ability to override request validation policy and support for SSML output speech type
+1.5.0: Fully implement certificate verification requirement and support for Standard cards
+1.5.2: reimplement request timestamp parsing to accept both ISO 8601 and Unix time formats
+1.6.0: Support external interfaces,  .Net Standard support
+2.0.0: Separate core, API Provider libraries and External interface libraries. Allow providing support for new interfaces and network APIs without intrusion into Core library.
+</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <None Remove="Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.1.3" />
+  </ItemGroup>
+
+</Project>

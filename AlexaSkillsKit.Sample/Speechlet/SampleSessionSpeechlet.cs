@@ -1,15 +1,15 @@
 ﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
 
+using AlexaSkillsKit.Interfaces.Display;
+using AlexaSkillsKit.Interfaces.Display.Directives;
+using AlexaSkillsKit.Interfaces.VideoApp;
+using AlexaSkillsKit.Interfaces.VideoApp.Directives;
+using AlexaSkillsKit.Slu;
+using AlexaSkillsKit.Speechlet;
+using AlexaSkillsKit.UI;
+using NLog;
 using System;
 using System.Collections.Generic;
-using NLog;
-using AlexaSkillsKit.Speechlet;
-using AlexaSkillsKit.Slu;
-using AlexaSkillsKit.UI;
-using AlexaSkillsKit.Interfaces.Display;
-using AlexaSkillsKit.Interfaces.VideoApp;
-using AlexaSkillsKit.Interfaces.Display.Directives;
-using AlexaSkillsKit.Interfaces.VideoApp.Directives;
 
 namespace Sample.Controllers
 {
@@ -20,7 +20,6 @@ namespace Sample.Controllers
         // Note: NAME_KEY being a JSON property key gets camelCased during serialization
         private const string NAME_KEY = "name";
         private const string NAME_SLOT = "Name";
-
 
         public override void OnSessionStarted(SessionStartedRequest request, Session session) {            
             Log.Info("OnSessionStarted requestId={0}, sessionId={1}", request.RequestId, session.SessionId);

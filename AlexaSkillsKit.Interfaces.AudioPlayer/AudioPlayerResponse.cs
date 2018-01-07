@@ -1,6 +1,4 @@
-﻿//  Copyright 2015 Stefan Negritoiu (FreeBusy). See LICENSE file for more information.
-
-using AlexaSkillsKit.Interfaces.AudioPlayer.Directives;
+﻿using AlexaSkillsKit.Interfaces.AudioPlayer.Directives;
 using AlexaSkillsKit.Speechlet;
 using System.Collections.Generic;
 

@@ -12,14 +12,6 @@ namespace AlexaSkillsKit.Json
     {
         public static SpeechletRequestParser RequestParser { get; } = new SpeechletRequestParser();
 
-        static SpeechletRequestEnvelope() {
-            RequestParser.AddStandard();
-            RequestParser.AddSystem();
-            RequestParser.AddAudioPlayer();
-            RequestParser.AddPlaybackController();
-            RequestParser.AddDisplay();
-        }
-
         /// <summary>
         /// 
         /// </summary>
@@ -34,12 +26,6 @@ namespace AlexaSkillsKit.Json
             return FromJson(json);
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="json"></param>
-        /// <returns></returns>
         public static SpeechletRequestEnvelope FromJson(JObject json) {
             var version = json.Value<string>("version");
             if (version != null && version != Sdk.VERSION) {

@@ -1,7 +1,5 @@
-﻿using System;
+﻿using AlexaSkillsKit.Authentication;
 using Xunit;
-using AlexaSkillsKit;
-using AlexaSkillsKit.Authentication;
 
 namespace AlexaSkillsKit.Tests
 {
